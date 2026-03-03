@@ -1,5 +1,5 @@
 {
-  "name": "nu-vibing-env-smoke",
+  "name": "bring-global-salary",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
@@ -9,10 +9,15 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.4.2",
+    "@react-native-async-storage/async-storage": "^3.0.1",
     "expo": "~55.0.4",
+    "expo-font": "~55.0.4",
+    "expo-splash-screen": "~55.0.10",
     "expo-status-bar": "~55.0.4",
     "react": "19.2.0",
-    "react-native": "0.83.2"
+    "react-native": "0.83.2",
+    "react-native-svg": "15.15.3"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",

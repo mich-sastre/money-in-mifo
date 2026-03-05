@@ -17,10 +17,11 @@ type Props = NativeStackScreenProps<RootStackParamList, 'FlowConfirmation'>;
 const avatarSourceMx = require('../../assets/avatar-bbva.png');
 const avatarAndrea = require('../../assets/avatar-andrea.png');
 
-export function FlowConfirmationScreen({ navigation }: Props) {
+export function FlowConfirmationScreen({ navigation, route }: Props) {
   const { config } = useCountry();
   const { copy } = config;
   const isMX = config.code === 'mx';
+  const inputValue = route.params?.inputValue;
   const [detailsExpanded, setDetailsExpanded] = useState(true);
   const [legalAccepted, setLegalAccepted] = useState(false);
 
@@ -54,7 +55,7 @@ export function FlowConfirmationScreen({ navigation }: Props) {
             )}
             <View style={[styles.textWrap, stroke]}>
               <Text style={[styles.rowTitle, stroke]}>{copy.confirmationSourceBank}</Text>
-              <Text style={[styles.rowSubtitle, stroke]}>{copy.confirmationSourceAccount}</Text>
+              <Text style={[styles.rowSubtitle, stroke]}>{inputValue || copy.confirmationSourceAccount}</Text>
             </View>
           </View>
 
@@ -94,25 +95,29 @@ export function FlowConfirmationScreen({ navigation }: Props) {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Pressable
-          style={styles.legalRow}
-          onPress={() => setLegalAccepted((v) => !v)}
-        >
-          <View style={[styles.checkbox, legalAccepted && styles.checkboxActive]}>
-            {legalAccepted && <CheckIcon />}
-          </View>
-          <Text style={styles.legalText}>{copy.confirmationLegalText}</Text>
-        </Pressable>
-        {legalAccepted ? (
-          <PrimaryButton
-            label={copy.confirmationCta}
-            onPress={() => navigation.navigate('FlowSuccess')}
-          />
-        ) : (
-          <View style={styles.disabledButton}>
-            <Text style={styles.disabledButtonText}>{copy.confirmationCta}</Text>
-          </View>
-        )}
+        <View style={styles.legalContainer}>
+          <Pressable
+            style={styles.legalRow}
+            onPress={() => setLegalAccepted((v) => !v)}
+          >
+            <View style={[styles.checkbox, legalAccepted && styles.checkboxActive]}>
+              {legalAccepted && <CheckIcon />}
+            </View>
+            <Text style={styles.legalText}>{copy.confirmationLegalText}</Text>
+          </Pressable>
+        </View>
+        <View style={styles.buttonContainer}>
+          {legalAccepted ? (
+            <PrimaryButton
+              label={copy.confirmationCta}
+              onPress={() => navigation.navigate('FlowSuccess')}
+            />
+          ) : (
+            <View style={styles.disabledButton}>
+              <Text style={styles.disabledButtonText}>{copy.confirmationCta}</Text>
+            </View>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -335,11 +340,16 @@ const styles = StyleSheet.create({
     letterSpacing: -0.16,
     color: 'rgba(17,17,17,0.72)',
   },
+  legalContainer: {
+    paddingVertical: 15,
+  },
+  buttonContainer: {
+    paddingVertical: spacing.x4,
+  },
   legalRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.x4,
-    marginBottom: spacing.x4,
   },
   checkbox: {
     width: 24,

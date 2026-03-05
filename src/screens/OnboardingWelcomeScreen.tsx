@@ -106,14 +106,13 @@ export function OnboardingWelcomeScreen({ navigation }: Props) {
 
       <View style={styles.carouselWrap}>
         <Carousel
-          width={350}
+          width={SCREEN_WIDTH}
           height={CARD_HEIGHT}
-          style={{ width: SCREEN_WIDTH, alignSelf: 'center' }}
           data={benefits}
           mode="parallax"
           modeConfig={{
             parallaxScrollingScale: 1,
-            parallaxScrollingOffset: 310,
+            parallaxScrollingOffset: 350,
             parallaxAdjacentItemScale: 0.85,
           }}
           scrollAnimationDuration={400}
@@ -190,6 +189,7 @@ const styles = StyleSheet.create({
   dot: {},
   footer: {
     paddingHorizontal: navPaddingHorizontal,
-    paddingBottom: spacing.xl + 8,
+    paddingTop: spacing.x4,
+    paddingBottom: spacing.x4,
   },
 });

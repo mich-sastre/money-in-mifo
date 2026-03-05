@@ -42,6 +42,12 @@ export interface CountryConfig {
     confirmationCta: string;
     /** Beneficios (carrusel en pantalla de bienvenida). */
     benefits?: { title: string; description: string }[];
+    /** Tracker / seguimiento. */
+    trackerTitle?: string;
+    trackerSubtitle?: string;
+    trackerBenefits?: { title: string; description: string }[];
+    trackerSteps?: { title: string; subtitle: string; status: 'done' | 'pending' }[];
+    trackerCta?: string;
     /** Éxito / sueldo traído. */
     successTitle: string;
     successDescription: string;

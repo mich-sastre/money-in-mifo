@@ -4,12 +4,13 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { NavBackIcon } from '../components/icons/NavBackIcon';
 import { PrimaryButton } from '../components/PrimaryButton';
+import { useCountry } from '../context/CountryContext';
 import { colors, fonts, spacing } from '../theme';
 import type { RootStackParamList } from '../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'FlowTracker'>;
 
-const LAYOUT_DEBUG = false;
+const LAYOUT_DEBUG = true;
 const stroke = LAYOUT_DEBUG ? { borderWidth: 1, borderColor: 'red' } : {};
 
 const TIMELINE_STEPS = [
@@ -30,7 +31,21 @@ const TIMELINE_STEPS = [
   },
 ];
 
+const DEFAULT_BENEFITS = [
+  { title: 'Benefit #1', description: 'Description of benefit #1' },
+  { title: 'Highlight title', description: 'Lörem ipsum parang mede losmos en hir mobillångfilm. Kasade ossade. Did san an regen.' },
+];
+
 export function FlowTrackerScreen({ navigation }: Props) {
+  const { config } = useCountry();
+  const { copy } = config;
+
+  const title = copy.trackerTitle ?? 'Payroll is coming';
+  const subtitle = copy.trackerSubtitle ?? 'Subtitle next steps';
+  const benefits = copy.trackerBenefits ?? DEFAULT_BENEFITS;
+  const steps = copy.trackerSteps ?? TIMELINE_STEPS;
+  const cta = copy.trackerCta ?? 'Call to action';
+
   return (
     <View style={[styles.container, stroke]}>
       <View style={[styles.topBar, stroke]}>
@@ -51,8 +66,8 @@ export function FlowTrackerScreen({ navigation }: Props) {
         contentContainerStyle={styles.scrollInner}
       >
         <View style={[styles.headerText, stroke]}>
-          <Text style={[styles.title, stroke]}>Payroll is coming</Text>
-          <Text style={[styles.subtitle, stroke]}>Subtitle next steps</Text>
+          <Text style={[styles.title, stroke]}>{title}</Text>
+          <Text style={[styles.subtitle, stroke]}>{subtitle}</Text>
         </View>
 
         <ScrollView
@@ -61,25 +76,18 @@ export function FlowTrackerScreen({ navigation }: Props) {
           style={[styles.benefitsScroll, stroke]}
           contentContainerStyle={styles.benefitsInner}
         >
-          <View style={[styles.benefitCard, stroke]}>
-            <Text style={[styles.benefitTitle, stroke]}>Benefit #1</Text>
-            <Text style={[styles.benefitDescription, stroke]}>
-              Description of benefit #1
-            </Text>
-          </View>
-          <View style={[styles.benefitCard, stroke]}>
-            <Text style={[styles.benefitTitle, stroke]}>Highlight title</Text>
-            <Text style={[styles.benefitDescription, stroke]}>
-              Lörem ipsum parang mede losmos en hir mobillångfilm. Kasade
-              ossade. Did san an regen.
-            </Text>
-          </View>
+          {benefits.map((b, i) => (
+            <View key={i} style={[styles.benefitCard, stroke]}>
+              <Text style={[styles.benefitTitle, stroke]}>{b.title}</Text>
+              <Text style={[styles.benefitDescription, stroke]}>{b.description}</Text>
+            </View>
+          ))}
         </ScrollView>
 
         <View style={[styles.timeline, stroke]}>
-          {TIMELINE_STEPS.map((step, index) => {
+          {steps.map((step, index) => {
             const isFirst = index === 0;
-            const isLast = index === TIMELINE_STEPS.length - 1;
+            const isLast = index === steps.length - 1;
             const isDone = step.status === 'done';
 
             return (
@@ -139,7 +147,7 @@ export function FlowTrackerScreen({ navigation }: Props) {
 
       <View style={[styles.footer, stroke]}>
         <PrimaryButton
-          label="Call to action"
+          label={cta}
           onPress={() => navigation.navigate('Onboarding')}
         />
       </View>

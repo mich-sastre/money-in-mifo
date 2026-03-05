@@ -14,9 +14,20 @@ type Props = NativeStackScreenProps<RootStackParamList, 'FlowInput'>;
 export function FlowInputScreen({ navigation }: Props) {
   const { activeCountry, config } = useCountry();
   const { copy } = config;
+  const isMX = activeCountry === 'mx';
   const [value, setValue] = useState('');
-  const isValid = value.length >= 6;
   const showInput = !config.usesThirdPartyIntegration;
+
+  const handleInputChange = (text: string) => {
+    if (isMX) {
+      const digits = text.replace(/[^0-9]/g, '');
+      setValue(digits.slice(0, 18));
+    } else {
+      setValue(text);
+    }
+  };
+
+  const isValid = isMX ? value.length === 18 : value.length >= 6;
   const canContinue = showInput ? isValid : true;
 
   const handleContinue = () => {
@@ -29,7 +40,7 @@ export function FlowInputScreen({ navigation }: Props) {
       return;
     }
 
-    navigation.navigate('FlowConfirmation');
+    navigation.navigate('FlowConfirmation', { inputValue: value });
   };
 
   return (
@@ -44,8 +55,9 @@ export function FlowInputScreen({ navigation }: Props) {
             label={copy.inputLabel}
             placeholder={copy.inputPlaceholder}
             value={value}
-            onChangeText={setValue}
+            onChangeText={handleInputChange}
             validated={isValid}
+            keyboardType={isMX ? 'number-pad' : 'default'}
           />
         )}
         {copy.inputCallout ? (
@@ -56,7 +68,7 @@ export function FlowInputScreen({ navigation }: Props) {
       </View>
 
       <View style={{ paddingHorizontal: spacing.x6, paddingBottom: spacing.xl + 8 }}>
-        <PrimaryButton label={copy.inputCta} onPress={handleContinue} />
+        <PrimaryButton label={copy.inputCta} onPress={handleContinue} disabled={!canContinue} />
       </View>
     </FlowScreenLayout>
   );

@@ -74,7 +74,7 @@ export function FlowBankSelectionScreen({ navigation }: Props) {
           <Pressable
             key={bankName}
             style={styles.row}
-            onPress={() => navigation.navigate('FlowConfirmation')}
+            onPress={() => navigation.navigate('FlowConfirmation', {})}
           >
             <View style={styles.bankIconWrap}>
               <BankIcon />

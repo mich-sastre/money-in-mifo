@@ -6,13 +6,18 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NuDSThemeProvider } from '@nubank/nuds-vibecode-react-native';
 import { CountryProvider } from './src/context';
+import { HomeScreen } from './src/screens/HomeScreen';
 import { OnboardingWelcomeScreen } from './src/screens/OnboardingWelcomeScreen';
+import { OnboardingWelcomeScreenUS } from './src/screens/OnboardingWelcomeScreenUS';
+import { FlowInputScreenUS } from './src/screens/FlowInputScreenUS';
 import { FlowInputScreen } from './src/screens/FlowInputScreen';
 import { FlowBankSelectionScreen } from './src/screens/FlowBankSelectionScreen';
 import { FlowConfirmationScreen } from './src/screens/FlowConfirmationScreen';
 import { FlowSuccessScreen } from './src/screens/FlowSuccessScreen';
 import { FlowTrackerScreen } from './src/screens/FlowTrackerScreen';
+import { PinwheelMockScreen } from './src/screens/PinwheelMockScreen';
 import type { RootStackParamList } from './src/navigation/types';
 
 SplashScreen.preventAutoHideAsync();
@@ -24,6 +29,12 @@ export default function App() {
     'Graphik-Regular': require('./assets/fonts/Graphik-Regular-Trial.otf'),
     'Graphik-Medium': require('./assets/fonts/Graphik-Medium-Trial.otf'),
     'Graphik-Semibold': require('./assets/fonts/Graphik-Semibold-Trial.otf'),
+    'NuSansDisplay-Regular': require('@nubank/nuds-vibecode-react-native/assets/fonts/NuSansDisplay-Regular.otf'),
+    'NuSansDisplay-Medium': require('@nubank/nuds-vibecode-react-native/assets/fonts/NuSansDisplay-Medium.otf'),
+    'NuSansDisplay-Semibold': require('@nubank/nuds-vibecode-react-native/assets/fonts/NuSansDisplay-Semibold.otf'),
+    'NuSansText-Regular': require('@nubank/nuds-vibecode-react-native/assets/fonts/NuSansText-Regular.otf'),
+    'NuSansText-Medium': require('@nubank/nuds-vibecode-react-native/assets/fonts/NuSansText-Medium.otf'),
+    'NuSansText-Semibold': require('@nubank/nuds-vibecode-react-native/assets/fonts/NuSansText-Semibold.otf'),
   });
 
   const onLayoutRootView = useCallback(() => {
@@ -38,19 +49,25 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <CountryProvider>
-        <StatusBar style="dark" />
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Onboarding" component={OnboardingWelcomeScreen} />
-            <Stack.Screen name="FlowInput" component={FlowInputScreen} />
-            <Stack.Screen name="FlowBankSelection" component={FlowBankSelectionScreen} />
-            <Stack.Screen name="FlowConfirmation" component={FlowConfirmationScreen} />
-            <Stack.Screen name="FlowSuccess" component={FlowSuccessScreen} />
-            <Stack.Screen name="FlowTracker" component={FlowTrackerScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </CountryProvider>
+      <NuDSThemeProvider mode="light">
+        <CountryProvider>
+          <StatusBar style="dark" />
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Onboarding" component={OnboardingWelcomeScreen} />
+              <Stack.Screen name="OnboardingUS" component={OnboardingWelcomeScreenUS} />
+              <Stack.Screen name="FlowInput" component={FlowInputScreen} />
+              <Stack.Screen name="FlowInputUS" component={FlowInputScreenUS} />
+              <Stack.Screen name="PinwheelMock" component={PinwheelMockScreen} />
+              <Stack.Screen name="FlowBankSelection" component={FlowBankSelectionScreen} />
+              <Stack.Screen name="FlowConfirmation" component={FlowConfirmationScreen} />
+              <Stack.Screen name="FlowSuccess" component={FlowSuccessScreen} />
+              <Stack.Screen name="FlowTracker" component={FlowTrackerScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </CountryProvider>
+      </NuDSThemeProvider>
     </GestureHandlerRootView>
   );
 }

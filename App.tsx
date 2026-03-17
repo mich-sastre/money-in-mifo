@@ -18,6 +18,9 @@ import { FlowConfirmationScreen } from './src/screens/FlowConfirmationScreen';
 import { FlowSuccessScreen } from './src/screens/FlowSuccessScreen';
 import { FlowTrackerScreen } from './src/screens/FlowTrackerScreen';
 import { PinwheelMockScreen } from './src/screens/PinwheelMockScreen';
+import { FlowConfirmationScreenUS } from './src/screens/FlowConfirmationScreenUS';
+import { DepositScreen } from './src/screens/DepositScreen';
+import { MenuScreen } from './src/screens/MenuScreen';
 import type { RootStackParamList } from './src/navigation/types';
 
 SplashScreen.preventAutoHideAsync();
@@ -55,6 +58,12 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Deposit" component={DepositScreen} />
+              <Stack.Screen
+                name="Menu"
+                component={MenuScreen}
+                options={{ presentation: 'transparentModal', animation: 'none' }}
+              />
               <Stack.Screen name="Onboarding" component={OnboardingWelcomeScreen} />
               <Stack.Screen name="OnboardingUS" component={OnboardingWelcomeScreenUS} />
               <Stack.Screen name="FlowInput" component={FlowInputScreen} />
@@ -62,6 +71,7 @@ export default function App() {
               <Stack.Screen name="PinwheelMock" component={PinwheelMockScreen} />
               <Stack.Screen name="FlowBankSelection" component={FlowBankSelectionScreen} />
               <Stack.Screen name="FlowConfirmation" component={FlowConfirmationScreen} />
+              <Stack.Screen name="FlowConfirmationUS" component={FlowConfirmationScreenUS} />
               <Stack.Screen name="FlowSuccess" component={FlowSuccessScreen} />
               <Stack.Screen name="FlowTracker" component={FlowTrackerScreen} />
             </Stack.Navigator>

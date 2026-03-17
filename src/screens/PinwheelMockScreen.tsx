@@ -73,7 +73,7 @@ export function PinwheelMockScreen({ navigation }: Props) {
       }).start();
 
       const timer = setTimeout(() => {
-        navigation.replace('FlowConfirmation', {});
+        navigation.replace('FlowConfirmationUS');
       }, 2000);
       return () => clearTimeout(timer);
     }

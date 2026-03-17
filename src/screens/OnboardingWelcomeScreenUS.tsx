@@ -28,19 +28,19 @@ const BENEFITS = [
     title: 'Disfruta a tus artistas favoritos',
     description: 'Accede a boletos exclusivos para conciertos',
     color: '#9032EB',
-    imageSource: require('../../assets/benefit-card-1.png'),
+    imageSource: require('../../assets/carousel-card-1.png'),
   },
   {
     title: 'Dinero de regreso en todo',
     description: 'Gana cashback en cada compra con débito',
     color: '#7B2FBF',
-    imageSource: require('../../assets/benefit-card-2.png'),
+    imageSource: require('../../assets/carousel-card-2.png'),
   },
   {
     title: 'Viaja a donde quieras',
     description: 'Paga boletos de avión y viajes con Nu Plus',
     color: '#6B28A3',
-    imageSource: require('../../assets/benefit-card-3.png'),
+    imageSource: require('../../assets/carousel-card-3.png'),
   },
 ];
 

@@ -34,9 +34,9 @@ const DEFAULT_BENEFITS = [
 ];
 
 const CARD_VISUALS = [
-  { color: '#9032EB', imageSource: require('../../assets/benefit-card-1.png') },
-  { color: '#7B2FBF', imageSource: require('../../assets/benefit-card-2.png') },
-  { color: '#6B28A3', imageSource: require('../../assets/benefit-card-3.png') },
+  { color: '#9032EB', imageSource: require('../../assets/carousel-card-1.png') },
+  { color: '#7B2FBF', imageSource: require('../../assets/carousel-card-2.png') },
+  { color: '#6B28A3', imageSource: require('../../assets/carousel-card-3.png') },
 ];
 
 type BenefitItem = {

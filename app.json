@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "mich11",
     "name": "bring-global-salary",
     "slug": "bring-global-salary",
     "version": "1.0.0",
@@ -28,6 +29,17 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "eb9fe33d-2e25-4079-8fd7-478cd66fde7f"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/eb9fe33d-2e25-4079-8fd7-478cd66fde7f"
+    }
   }
 }

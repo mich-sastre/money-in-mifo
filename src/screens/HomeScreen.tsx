@@ -125,7 +125,7 @@ function HomeV3({ navigation, footer }: Props & { footer?: React.ReactNode }) {
             <View style={styles.widgetButtons}>
               <TouchableOpacity
                 style={styles.buttonSecondary}
-                onPress={() => navigation.navigate(isUS ? 'OnboardingUS' : 'Onboarding')}
+                onPress={() => navigation.navigate(isUS ? 'OnboardingUS' : 'OnboardingV3')}
               >
                 <Text style={styles.buttonSecondaryLabel}>Traer mi nómina</Text>
               </TouchableOpacity>

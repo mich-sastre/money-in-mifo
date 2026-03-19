@@ -13,7 +13,7 @@ export const br: CountryConfig = {
     inputSubtitle: 'Confira os dados e confirme o pedido de portabilidade.',
     inputLabel: 'CNPJ do seu empregador',
     inputPlaceholder: '40.028.922/****-**',
-    inputCallout: '',
+    inputCallout: 'Você encontra no seu holerite, contracheque ou na sua carteira de trabalho física ou digital.',
     inputCta: 'Continuar',
     confirmationAccountHolder: 'Name account holder',
     confirmationAccountType: 'Type of account',

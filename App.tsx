@@ -21,6 +21,8 @@ import { PinwheelMockScreen } from './src/screens/PinwheelMockScreen';
 import { FlowConfirmationScreenUS } from './src/screens/FlowConfirmationScreenUS';
 import { DepositScreen } from './src/screens/DepositScreen';
 import { MenuScreen } from './src/screens/MenuScreen';
+import { OnboardingV3Screen } from './src/screens/OnboardingV3Screen';
+import { FlowInputV3Screen } from './src/screens/FlowInputV3Screen';
 import type { RootStackParamList } from './src/navigation/types';
 
 SplashScreen.preventAutoHideAsync();
@@ -65,6 +67,8 @@ export default function App() {
                 options={{ presentation: 'transparentModal', animation: 'none' }}
               />
               <Stack.Screen name="Onboarding" component={OnboardingWelcomeScreen} />
+              <Stack.Screen name="OnboardingV3" component={OnboardingV3Screen} />
+              <Stack.Screen name="FlowInputV3" component={FlowInputV3Screen} />
               <Stack.Screen name="OnboardingUS" component={OnboardingWelcomeScreenUS} />
               <Stack.Screen name="FlowInput" component={FlowInputScreen} />
               <Stack.Screen name="FlowInputUS" component={FlowInputScreenUS} />

@@ -26,6 +26,12 @@ export type BenefitCardProps = {
   placeholderColor?: string;
   /** 0 = principal (270×372), 1 = atrás (236×323), 2 = más atrás (208×279). */
   compactLevel?: 0 | 1 | 2;
+  /** When false, hides the purple gradient overlay on the illustration. Defaults to true. */
+  showGradient?: boolean;
+  /** When false, makes the text strip background transparent. Defaults to true. */
+  showStripBackground?: boolean;
+  /** When true, the image covers the entire card and text overlays at the bottom. */
+  fullBleedImage?: boolean;
 };
 
 function getCardSize(compactLevel: 0 | 1 | 2) {
@@ -41,11 +47,39 @@ export function BenefitCard({
   imageUri,
   placeholderColor = '#9032EB',
   compactLevel = 0,
+  showGradient = true,
+  showStripBackground = true,
+  fullBleedImage = false,
 }: BenefitCardProps) {
   const hasImage = imageSource ?? imageUri;
   const { width, height } = getCardSize(compactLevel);
   const stripHeight = compactLevel === 0 ? CARD_STRIP_HEIGHT : Math.round((CARD_STRIP_HEIGHT * height) / CARD_HEIGHT);
   const illustrationHeight = height - stripHeight;
+
+  if (fullBleedImage) {
+    return (
+      <View style={[styles.card, { width, height }]}>
+        {hasImage ? (
+          <Image
+            source={imageSource ?? { uri: imageUri! }}
+            style={styles.fullBleedImage}
+            resizeMode="cover"
+          />
+        ) : (
+          <View style={[styles.placeholder, { backgroundColor: placeholderColor }]} />
+        )}
+        <View style={styles.fullBleedTextWrap}>
+          <Text style={styles.stripTitle} numberOfLines={1}>
+            {title}
+          </Text>
+          <Text style={styles.stripDescription} numberOfLines={2}>
+            {description}
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.card, { width, height }]}>
       <View style={[styles.illustrationWrap, { height: illustrationHeight }]}>
@@ -58,14 +92,16 @@ export function BenefitCard({
         ) : (
           <View style={[styles.placeholder, { backgroundColor: placeholderColor }]} />
         )}
-        <LinearGradient
-          colors={['rgba(75,21,127,0)', 'rgba(75,21,127,0.95)']}
-          style={styles.gradientOverlay}
-          start={{ x: 0.5, y: 0.55 }}
-          end={{ x: 0.5, y: 1 }}
-        />
+        {showGradient && (
+          <LinearGradient
+            colors={['rgba(75,21,127,0)', 'rgba(75,21,127,0.95)']}
+            style={styles.gradientOverlay}
+            start={{ x: 0.5, y: 0.55 }}
+            end={{ x: 0.5, y: 1 }}
+          />
+        )}
       </View>
-      <View style={[styles.strip, { height: stripHeight }]}>
+      <View style={[styles.strip, { height: stripHeight }, !showStripBackground && { backgroundColor: 'transparent' }]}>
         <Text style={styles.stripTitle} numberOfLines={1}>
           {title}
         </Text>
@@ -126,5 +162,19 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     lineHeight: 21,
     letterSpacing: -0.14,
+  },
+  fullBleedImage: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
+  },
+  fullBleedTextWrap: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+    gap: 4,
   },
 });

@@ -32,9 +32,9 @@ const DEFAULT_BENEFITS = [
 ];
 
 const CARD_VISUALS = [
-  { color: '#9032EB', imageSource: require('../../assets/carousel-card-1.png') },
-  { color: '#7B2FBF', imageSource: require('../../assets/carousel-card-2.png') },
-  { color: '#6B28A3', imageSource: require('../../assets/carousel-card-3.png') },
+  { color: '#9032EB', imageSource: require('../../assets/carousel-v3-01.png') },
+  { color: '#7B2FBF', imageSource: require('../../assets/carousel-v3-02.png') },
+  { color: '#6B28A3', imageSource: require('../../assets/carousel-v3-03.png') },
 ];
 
 type BenefitItem = {
@@ -72,6 +72,7 @@ function CardSlide({ item, animationValue }: { item: BenefitItem; animationValue
           placeholderColor={item.color}
           imageSource={item.imageSource}
           compactLevel={0}
+          fullBleedImage
         />
         <Animated.View style={[StyleSheet.absoluteFill, blurStyle]}>
           <BlurView intensity={25} tint="dark" style={StyleSheet.absoluteFill} />

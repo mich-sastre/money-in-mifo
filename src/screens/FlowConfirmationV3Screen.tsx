@@ -5,11 +5,11 @@ import {
   Box,
   TopBar,
   NText,
-  Avatar,
   Button,
   ArrowDownIcon,
   ExpandLessIcon,
   ExpandMoreIcon,
+  HeadsetIcon,
   useNuDSTheme,
 } from '@nubank/nuds-vibecode-react-native';
 import type { RootStackParamList } from '../navigation/types';
@@ -19,8 +19,13 @@ type Props = NativeStackScreenProps<RootStackParamList, 'FlowConfirmationV3'>;
 const avatarAndrea = require('../../assets/avatar-andrea.png');
 const avatarBbva = require('../../assets/avatar-bbva.png');
 const avatarNu = require('../../assets/avatar-nu.png');
+const headerArtwork = require('../../assets/review-header-artwork.png');
 
-const stroke = {};
+const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 47 : StatusBar.currentHeight ?? 0;
+const ARTWORK_HEIGHT = 132;
+const AVATAR_SIZE = 92;
+const SPACER_HEIGHT = STATUS_BAR_HEIGHT + ARTWORK_HEIGHT - (AVATAR_SIZE + 6) / 2;
+
 
 export function FlowConfirmationV3Screen({ navigation, route }: Props) {
   const theme = useNuDSTheme();
@@ -29,28 +34,50 @@ export function FlowConfirmationV3Screen({ navigation, route }: Props) {
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
-    <Box surface="screen" style={[styles.container, stroke]}>
-      <TopBar
-        title=""
-        show1stAction={false}
-        show2ndAction={false}
-        onBackPress={() => navigation.goBack()}
-        style={{ backgroundColor: 'transparent' }}
+    <Box surface="screen" style={styles.container}>
+      {/* Background artwork — absolutely positioned */}
+      <Image
+        source={headerArtwork}
+        style={styles.artworkBackground}
+        resizeMode="cover"
       />
 
-      <View style={[styles.progressTrack, stroke]}>
-        <View style={[styles.progressFill, { backgroundColor: theme.color.surface.accent.primary }, stroke]} />
+      {/* White background filling everything below artwork */}
+      <View style={styles.whiteBackground} />
+
+      {/* TopBar floating over artwork */}
+      <View style={styles.topBarOverlay}>
+        <TopBar
+          title=""
+          show1stAction={true}
+          show2ndAction={false}
+          trailing={<HeadsetIcon size={24} color="#fff" />}
+          onBackPress={() => navigation.goBack()}
+          style={{ backgroundColor: 'transparent' }}
+        />
       </View>
 
+      {/* All content in one scrollable stream */}
       <ScrollView
-        style={[styles.scroll, stroke]}
+        style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Profile section */}
-        <View style={[styles.profileSection, stroke]}>
-          <Image source={avatarAndrea} style={[styles.profileAvatar, stroke]} />
-          <View style={[styles.profileText, stroke]}>
+        {/* Transparent spacer — lets the artwork show through */}
+        <View style={{ height: SPACER_HEIGHT }} />
+
+        {/* Avatar zone: top half transparent, bottom half white */}
+        <View style={styles.avatarContainer}>
+          <View style={styles.avatarBottomHalf} />
+          <View style={styles.avatarRing}>
+            <Image source={avatarAndrea} style={styles.profileAvatar} />
+          </View>
+        </View>
+
+        {/* Content area */}
+        <View style={styles.contentArea}>
+          {/* Profile name */}
+          <View style={styles.profileText}>
             <NText variant="labelSmallStrong" style={{ textAlign: 'center' }}>
               Andrea Jiménez
             </NText>
@@ -58,70 +85,66 @@ export function FlowConfirmationV3Screen({ navigation, route }: Props) {
               Cuenta de nómina
             </NText>
           </View>
-        </View>
 
-        {/* Banks transfer card */}
-        <View style={[styles.bankCardWrapper, stroke]}>
-          <View style={[styles.bankCard, { borderColor: theme.color.border.default }, stroke]}>
-            {/* Source bank */}
-            <View style={[styles.bankRow, stroke]}>
-              <Image source={avatarBbva} style={[styles.bankAvatar, stroke]} />
-              <View style={[styles.bankInfo, stroke]}>
-                <NText variant="labelSmallStrong">BBVA</NText>
-                <NText variant="paragraphSmallDefault" tone="secondary">
-                  {inputValue || '182 945 62 349092876 7'}
-                </NText>
+          {/* Banks transfer card */}
+          <View style={styles.bankCardWrapper}>
+            <View style={[styles.bankCard, { borderColor: theme.color.border.default }]}>
+              <View style={styles.bankRow}>
+                <Image source={avatarBbva} style={styles.bankAvatar} />
+                <View style={styles.bankInfo}>
+                  <NText variant="labelSmallStrong">BBVA</NText>
+                  <NText variant="paragraphSmallDefault" tone="secondary">
+                    {inputValue || '182 945 62 349092876 7'}
+                  </NText>
+                </View>
               </View>
-            </View>
 
-            {/* Arrow divider */}
-            <View style={[styles.arrowDivider, stroke]}>
-              <View style={[styles.dividerLine, { backgroundColor: theme.color.border.default }, stroke]} />
-              <ArrowDownIcon size={24} color={theme.color.content.subtle} />
-              <View style={[styles.dividerLine, { backgroundColor: theme.color.border.default }, stroke]} />
-            </View>
+              <View style={styles.arrowDivider}>
+                <View style={[styles.dividerLine, { backgroundColor: theme.color.border.default }]} />
+                <ArrowDownIcon size={24} color={theme.color.content.subtle} />
+                <View style={[styles.dividerLine, { backgroundColor: theme.color.border.default }]} />
+              </View>
 
-            {/* Destination bank */}
-            <View style={[styles.bankRow, stroke]}>
-              <Image source={avatarNu} style={[styles.bankAvatar, stroke]} />
-              <View style={[styles.bankInfo, stroke]}>
-                <NText variant="labelSmallStrong">Nu</NText>
-                <NText variant="paragraphSmallDefault" tone="secondary">
-                  282 945 62 349032879 8
-                </NText>
+              <View style={styles.bankRow}>
+                <Image source={avatarNu} style={styles.bankAvatar} />
+                <View style={styles.bankInfo}>
+                  <NText variant="labelSmallStrong">Nu</NText>
+                  <NText variant="paragraphSmallDefault" tone="secondary">
+                    282 945 62 349032879 8
+                  </NText>
+                </View>
               </View>
             </View>
           </View>
-        </View>
 
-        {/* Details section */}
-        <Pressable
-          style={[styles.detailsHeader, stroke]}
-          onPress={() => setDetailsExpanded(!detailsExpanded)}
-        >
-          <NText variant="labelSmallStrong" style={{ flex: 1 }}>
-            Detalles de portabilidad
-          </NText>
-          {detailsExpanded
-            ? <ExpandLessIcon size={20} color={theme.color.content.subtle} />
-            : <ExpandMoreIcon size={20} color={theme.color.content.subtle} />
-          }
-        </Pressable>
+          {/* Details section */}
+          <Pressable
+            style={styles.detailsHeader}
+            onPress={() => setDetailsExpanded(!detailsExpanded)}
+          >
+            <NText variant="labelSmallStrong" style={{ flex: 1 }}>
+              Detalles de portabilidad
+            </NText>
+            {detailsExpanded
+              ? <ExpandLessIcon size={20} color={theme.color.content.subtle} />
+              : <ExpandMoreIcon size={20} color={theme.color.content.subtle} />
+            }
+          </Pressable>
 
-        {detailsExpanded && (
-          <View style={[styles.detailsList, stroke]}>
-            <View style={[styles.detailRow, stroke]}>
-              <NText variant="labelSmallStrong">Fecha de nacimiento</NText>
-              <NText variant="paragraphSmallDefault" tone="secondary">25 Junio 2004</NText>
+          {detailsExpanded && (
+            <View style={styles.detailsList}>
+              <View style={styles.detailRow}>
+                <NText variant="labelSmallStrong">Fecha de nacimiento</NText>
+                <NText variant="paragraphSmallDefault" tone="secondary">25 Junio 2004</NText>
+              </View>
             </View>
-          </View>
-        )}
-
+          )}
+        </View>
       </ScrollView>
 
       {/* Terms checkbox — sticky above button */}
       <Pressable
-        style={[styles.termsRow, stroke]}
+        style={styles.termsRow}
         onPress={() => setTermsAccepted(!termsAccepted)}
       >
         <View
@@ -148,11 +171,11 @@ export function FlowConfirmationV3Screen({ navigation, route }: Props) {
         </NText>
       </Pressable>
 
-      {/* Bottom bar with disabled/enabled button */}
-      <View style={[{ paddingHorizontal: theme.spacing[4], paddingTop: theme.spacing[5], paddingBottom: theme.spacing[5] }, stroke]}>
+      {/* Bottom bar */}
+      <View style={{ paddingHorizontal: theme.spacing[4], paddingTop: theme.spacing[5], paddingBottom: theme.spacing[5] }}>
         {termsAccepted ? (
           <Button
-            label="Traer mi nómina"
+            label="Entendido"
             variant="primary"
             expanded
             onPress={() => navigation.navigate('PinChallengeV3')}
@@ -168,7 +191,7 @@ export function FlowConfirmationV3Screen({ navigation, route }: Props) {
             }}
           >
             <NText variant="labelSmallStrong" color={theme.color.content.disabled}>
-              Traer mi nómina
+              Entendido
             </NText>
           </View>
         )}
@@ -180,42 +203,76 @@ export function FlowConfirmationV3Screen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 47 : StatusBar.currentHeight ?? 0,
   },
-  progressTrack: {
-    height: 4,
-    backgroundColor: '#E8E8E8',
-    marginHorizontal: 100,
-    borderRadius: 2,
-    marginTop: -8,
-    marginBottom: 8,
+  artworkBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: STATUS_BAR_HEIGHT + ARTWORK_HEIGHT,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
-  progressFill: {
-    height: '100%',
-    width: '66%',
-    borderRadius: 2,
+  whiteBackground: {
+    position: 'absolute',
+    top: STATUS_BAR_HEIGHT + ARTWORK_HEIGHT,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#fff',
+  },
+  topBarOverlay: {
+    position: 'absolute',
+    top: STATUS_BAR_HEIGHT,
+    left: 0,
+    right: 0,
+    zIndex: 10,
   },
   scroll: {
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 20,
+    flexGrow: 1,
   },
-  profileSection: {
+  avatarContainer: {
+    height: AVATAR_SIZE + 6,
     alignItems: 'center',
-    paddingTop: 24,
-    paddingBottom: 24,
-    paddingHorizontal: 20,
+    justifyContent: 'center',
+    zIndex: 5,
+  },
+  avatarBottomHalf: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '50%',
+    backgroundColor: '#fff',
+  },
+  avatarRing: {
+    borderRadius: AVATAR_SIZE / 2 + 4,
+    padding: 3,
+    backgroundColor: '#fff',
+    shadowColor: '#1F002F',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 15,
+    elevation: 4,
   },
   profileAvatar: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    borderRadius: AVATAR_SIZE / 2,
+  },
+  contentArea: {
+    flex: 1,
+    paddingTop: 8,
+    backgroundColor: '#fff',
   },
   profileText: {
     alignItems: 'center',
     gap: 4,
-    marginTop: 8,
+    paddingBottom: 24,
+    paddingHorizontal: 20,
   },
   bankCardWrapper: {
     paddingHorizontal: 24,

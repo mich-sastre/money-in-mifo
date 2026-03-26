@@ -1,0 +1,51 @@
+import type { CountryConfig } from '../types';
+
+export const mx: CountryConfig = {
+  code: 'mx',
+  displayName: 'México',
+  copy: {
+    welcomeTitle: 'Tu nómina merece beneficios',
+    welcomeDescription: 'Traer tu nómina a Nubank es simple, rápido y te recompensa.',
+    connectBankTitle: 'Conectar banco',
+    connectBankDescription: 'Elige la institución donde recibes tu nómina.',
+    connectBankCta: 'Continuar',
+    inputTitle: '¿Dónde recibes tu nómina actualmente?',
+    inputSubtitle: '',
+    inputLabel: 'Tu cuenta de nómina actual',
+    inputPlaceholder: 'Pon la CLABE o tarjeta de débito',
+    inputCallout: 'Son los 18 dígitos de tu cuenta actual. Búscalo en tu app bancaria o estado de cuenta.',
+    inputCta: 'Continuar',
+    confirmationAccountHolder: 'Andrea Jiménez',
+    confirmationAccountType: 'Cuenta de nómina',
+    confirmationSourceBank: 'BBVA',
+    confirmationSourceAccount: '012180028191263710',
+    confirmationDestBank: 'Nubank',
+    confirmationDestAccount: '638180000012345670',
+    benefits: [
+      { title: 'Dinero de regreso en todo', description: 'Gana cashback en cada compra con débito' },
+      { title: 'Disfruta a tus artistas favoritos', description: 'Accede a boletos exclusivos para conciertos' },
+      { title: 'Viaja a donde quieras', description: 'Paga boletos de avión y viajes con Nu Plus' },
+    ],
+    confirmationDetailsLabel: 'Detalles de portabilidad',
+    confirmationDetails: [
+      { title: 'Fecha de nacimiento', subtitle: '25 Junio 2004' },
+    ],
+    confirmationLegalText: 'Autorizo el traslado de mi nómina y prestaciones a mi cuenta Nubank.',
+    confirmationCta: 'Traer mi nómina',
+    trackerTitle: '¡Tu nómina está en camino!',
+    trackerSubtitle: 'Ya casi todo está listo para que recibas tu próxima nómina en Nubank',
+    trackerBenefits: [
+      { title: 'Disfruta tus beneficios', description: 'Compra con tu tarjeta débito y disfruta del cashback.' },
+    ],
+    trackerSteps: [
+      { title: 'Solicitud de portabilidad enviada', subtitle: 'Estamos creando una conexión con el otro banco.', status: 'done' },
+      { title: 'Confirma el cambio en el banco anterior', subtitle: 'Entra a la app de tu otro banco y acepta la portabilidad.', status: 'pending' },
+      { title: 'Todo estará listo para el [15 de diciembre].', subtitle: 'A partir de este momento tu nómina caerá en Nubank.', status: 'pending' },
+    ],
+    trackerCta: 'Entendido',
+    successTitle: 'Listo',
+    successDescription: 'Cuando llegue tu nómina a la otra cuenta, la traemos automáticamente.',
+  },
+  bankNames: ['BBVA', 'Santander', 'Banamex', 'HSBC', 'Scotiabank', 'Otros'],
+  hasExtraLegalStep: true,
+};

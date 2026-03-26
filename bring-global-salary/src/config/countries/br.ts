@@ -1,0 +1,37 @@
+import type { CountryConfig } from '../types';
+
+export const br: CountryConfig = {
+  code: 'br',
+  displayName: 'Brasil',
+  copy: {
+    welcomeTitle: 'Traga seu salário',
+    welcomeDescription: 'Conecte o banco onde você recebe e traga o salário automaticamente todo mês.',
+    connectBankTitle: 'Conectar banco',
+    connectBankDescription: 'Escolha a instituição onde você recebe seu salário.',
+    connectBankCta: 'Continuar',
+    inputTitle: 'Portabilidade de salário',
+    inputSubtitle: 'Confira os dados e confirme o pedido de portabilidade.',
+    inputLabel: 'CNPJ do seu empregador',
+    inputPlaceholder: '40.028.922/****-**',
+    inputCallout: 'Você encontra no seu holerite, contracheque ou na sua carteira de trabalho física ou digital.',
+    inputCta: 'Continuar',
+    confirmationAccountHolder: 'Name account holder',
+    confirmationAccountType: 'Type of account',
+    confirmationSourceBank: 'Bank payroll holder',
+    confirmationSourceAccount: 'Identifier account',
+    confirmationDestBank: 'Nubank',
+    confirmationDestAccount: 'Identifier account',
+    confirmationDetailsLabel: 'Details',
+    confirmationDetails: [
+      { title: 'Detail #1', subtitle: 'Description' },
+      { title: 'Detail #2', subtitle: 'Description' },
+      { title: 'Detail #3', subtitle: 'Description' },
+    ],
+    confirmationLegalText: 'Legal text',
+    confirmationCta: 'Call to action',
+    successTitle: 'Tudo certo!',
+    successDescription: 'Quando seu salário cair na outra conta, trazemos automaticamente.',
+  },
+  bankNames: ['Banco do Brasil', 'Itaú', 'Bradesco', 'Santander', 'Caixa', 'Outros'],
+  hasExtraLegalStep: false,
+};

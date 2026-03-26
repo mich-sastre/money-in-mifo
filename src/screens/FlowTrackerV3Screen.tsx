@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Platform, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { Dimensions, Image, Platform, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   Box,
@@ -18,10 +18,11 @@ type Props = NativeStackScreenProps<RootStackParamList, 'FlowTrackerV3'>;
 const headerArtwork = require('../../assets/tracker-header-artwork.png');
 const cardArtwork = require('../../assets/tracker-card-artwork.png');
 
+const SCREEN_WIDTH = Dimensions.get('window').width;
 const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 47 : StatusBar.currentHeight ?? 0;
 const ARTWORK_HEIGHT = 329;
 const CARD_OVERLAP = 100;
-const SPACER_HEIGHT = STATUS_BAR_HEIGHT + ARTWORK_HEIGHT - CARD_OVERLAP;
+const SPACER_HEIGHT = ARTWORK_HEIGHT - CARD_OVERLAP;
 
 export function FlowTrackerV3Screen({ navigation }: Props) {
   const theme = useNuDSTheme();
@@ -32,7 +33,7 @@ export function FlowTrackerV3Screen({ navigation }: Props) {
       <Image
         source={headerArtwork}
         style={styles.artworkBackground}
-        resizeMode="cover"
+        resizeMode="contain"
       />
 
       {/* White background below artwork */}
@@ -172,13 +173,13 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: STATUS_BAR_HEIGHT + ARTWORK_HEIGHT,
+    height: ARTWORK_HEIGHT,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
   whiteBackground: {
     position: 'absolute',
-    top: STATUS_BAR_HEIGHT + ARTWORK_HEIGHT,
+    top: ARTWORK_HEIGHT,
     left: 0,
     right: 0,
     bottom: 0,
@@ -225,6 +226,7 @@ const styles = StyleSheet.create({
   timelineSection: {
     paddingHorizontal: 24,
     paddingTop: 16,
+    backgroundColor: '#fff',
   },
   checkpoint: {
     flexDirection: 'row',

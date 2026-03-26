@@ -144,7 +144,7 @@ export function FlowConfirmationV3Screen({ navigation, route }: Props) {
 
       {/* Terms checkbox — sticky above button */}
       <Pressable
-        style={styles.termsRow}
+        style={[styles.termsRow, { backgroundColor: '#fff' }]}
         onPress={() => setTermsAccepted(!termsAccepted)}
       >
         <View
@@ -172,7 +172,7 @@ export function FlowConfirmationV3Screen({ navigation, route }: Props) {
       </Pressable>
 
       {/* Bottom bar */}
-      <View style={{ paddingHorizontal: theme.spacing[4], paddingTop: theme.spacing[5], paddingBottom: theme.spacing[5] }}>
+      <View style={{ paddingHorizontal: theme.spacing[4], paddingTop: theme.spacing[5], paddingBottom: theme.spacing[5], backgroundColor: '#fff' }}>
         {termsAccepted ? (
           <Button
             label="Entendido"
